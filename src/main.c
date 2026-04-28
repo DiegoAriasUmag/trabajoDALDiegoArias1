@@ -1,5 +1,7 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "../include/deportista.h"
+#include "../include/generacion.h"
 
 int main(void) {
     int opcion;
@@ -16,34 +18,48 @@ int main(void) {
 
         if (scanf("%d", &opcion) != 1) {
             printf("Error: Entrada invalida. Intente nuevamente.\n");
-            while (getchar() != '\n');  // Limpiar buffer
+            while (getchar() != '\n');
             continue;
         }
 
         switch (opcion) {
-            case 1:
-                printf("-> Generando datos...\n");
-                // TODO: Llamar a función generar_datos()
+            case 1: {
+                int cantidad;
+                Deportista *deportistas;
+
+                printf("Cantidad de deportistas a generar: ");
+                if (scanf("%d", &cantidad) != 1 || cantidad <= 0) {
+                    printf("Cantidad invalida\n");
+                    while (getchar() != '\n');
+                    break;
+                }
+
+                deportistas = (Deportista *)malloc((size_t)cantidad * sizeof(Deportista));
+                if (deportistas == NULL) {
+                    printf("No se pudo reservar memoria\n");
+                    break;
+                }
+
+                generar_deportistas(deportistas, cantidad);
+                mostrar_resumen_generado(deportistas, cantidad);
+                free(deportistas);
                 break;
+            }
 
             case 2:
                 printf("-> Cargando CSV...\n");
-                // TODO: Llamar a función cargar_csv()
                 break;
 
             case 3:
                 printf("-> Ordenando deportistas...\n");
-                // TODO: Menú de ordenamiento (por puntaje, nombre, id, etc.)
                 break;
 
             case 4:
                 printf("-> Buscando por ID...\n");
-                // TODO: Implementar búsqueda por ID
                 break;
 
             case 5:
                 printf("-> Mostrando ranking...\n");
-                // TODO: Mostrar mejores N por puntaje
                 break;
 
             case 6:
