@@ -5,5 +5,6 @@
 
 void generar_deportistas(Deportista *deportistas, int cantidad);
 void mostrar_resumen_generado(const Deportista *deportistas, int cantidad);
+int guardar_deportistas_csv(const char *ruta, const Deportista *deportistas, int cantidad);
 
 #endif

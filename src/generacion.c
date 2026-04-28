@@ -13,6 +13,34 @@ static void inicializar_semilla(void) {
     }
 }
 
+int guardar_deportistas_csv(const char *ruta, const Deportista *deportistas, int cantidad) {
+    FILE *archivo;
+    int i;
+
+    if (ruta == NULL || deportistas == NULL || cantidad <= 0) {
+        return 0;
+    }
+
+    archivo = fopen(ruta, "w");
+    if (archivo == NULL) {
+        return 0;
+    }
+
+    fprintf(archivo, "id,nombre,equipo,puntaje,competencias\n");
+
+    for (i = 0; i < cantidad; i++) {
+        fprintf(archivo, "%d,%s,%s,%.1f,%d\n",
+                deportistas[i].id,
+                deportistas[i].nombre,
+                deportistas[i].equipo,
+                deportistas[i].puntaje,
+                deportistas[i].competencias);
+    }
+
+    fclose(archivo);
+    return 1;
+}
+
 static void generar_nombre_aleatorio(char *destino, int maximo) {
     int largo_minimo = 4;
     int rango = 8;
